@@ -48,7 +48,7 @@ module Wowwee
           @device= dev
           @device.start_notify!(UUID, Characteristics::NOTIFY)
         end
-        def read(cmd)
+        def read
           @device[UUID, Characteristics::NOTIFY]
         end
         def on_notification(&callback)
