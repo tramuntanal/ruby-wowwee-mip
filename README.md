@@ -36,7 +36,7 @@ See status:
 ```ruby
 status= mip.status
 puts status.battery_level   => 50
-puts MIP.game_mode          => :default
+puts mip.game_mode          => :default
 ```
 Play:
 ```ruby
