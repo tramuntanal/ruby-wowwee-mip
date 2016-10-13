@@ -114,11 +114,11 @@ module Wowwee
             super(CMD, [speed, times])
           end
         end
-      end
-      class DistanceDrive < Base
-        CMD= 0x70
-        def initialize(data)
-          super(CMD, *data)
+        class DistanceDrive < Base
+          CMD= 0x70
+          def initialize(data)
+            super(CMD, *data)
+          end
         end
       end
 
