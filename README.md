@@ -35,8 +35,8 @@ mip= Wowwee.mip(ble_address)
 See status:
 ```ruby
 status= mip.status
-puts status.battery_level   => 50
-puts mip.game_mode          => :default
+puts status.battery_level   #=> 50
+puts mip.game_mode          #=> :default
 ```
 Play:
 ```ruby
