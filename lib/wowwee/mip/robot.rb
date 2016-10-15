@@ -179,6 +179,16 @@ module Wowwee
       def set_head_led(l1=:off, l2=:off, l3=:off, l4=:off)
         @send_data.send(Protocol::Cmd::SetHeadLed.new(l1, l2, l3, l4))
       end
+      # Plays one of the sounds of the robot for 1 second
+      def play_sound(sequence=[1, 30])
+        @send_data.send(Protocol::Cmd::PlaySound.new(sequence))
+      end
+      def silence!
+        @send_data.send(Protocol::Cmd::PlaySound.new([105]))
+      end
+      def volume(vol)
+        @send_data.send(Protocol::Cmd::Volume.new(vol))
+      end
       #------------------------------------
       private
       #------------------------------------

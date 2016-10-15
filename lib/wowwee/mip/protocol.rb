@@ -120,6 +120,18 @@ module Wowwee
             super(CMD, data)
           end
         end
+        class PlaySound < Base
+          CMD= 0x06
+          def initialize(data)
+            super(CMD, data)
+          end
+        end
+        class Volume < Base
+          CMD= 0x15
+          def initialize(data)
+            super(CMD, [data])
+          end
+        end
       end
 
     end
