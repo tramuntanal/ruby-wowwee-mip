@@ -79,7 +79,7 @@ module Wowwee
         when 0x08 then :roam
         else raise "Unknown game mode #{rs}-#{rs.class}"
         end
-      rescue Error
+      rescue
         retries+=1
         retry if retries < 2
       end
@@ -116,7 +116,7 @@ module Wowwee
       def distance_drive(fwd_bkw: :fwd, distance_cm: 100,  turn_direction: :clockwise, turn_angle: 0)
         angle_hb= turn_angle / 0x100
         angle_lb= turn_angle % 0x100
-        data= [Protocol::Cmd::DISTANCE_DRIVE,
+        data= [
           fwd_bkw == :fwd ? 0 : 1,
           distance_cm,
           turn_direction == :clockwise ? 1 : 0,
@@ -185,21 +185,33 @@ module Wowwee
 
       def read_notif(cmd)
         response= nil
+        # register notification callback
         @receive_data.on_notification {|val|
           response= val
         }
+        # request information
         @send_data.send(cmd)
+        # wait notification (and information) to arrive
         Timeout.timeout(5) {
+          waiting= true
           begin
-            waiting= response.nil?
+            if !response.nil?
+              response= scan_notif_response(cmd, response)
+              waiting= response.nil?
+            end
             # is_connected? should be called so that device information is updated and the callback is executed.
           end while waiting and @device.is_connected? and sleep(0.25)
         }
+        response
+      rescue Timeout::Error
+      end
+      def scan_notif_response(cmd, response)
         ary= response.scan(/../)
         rs= ary.collect {|hex| hex.to_i(16)}
-        raise UnexpectedResponse, "Received #{response} response for cmd #{cmd.class::CMD}" unless rs.shift == cmd.class::CMD
+        # do not raise exception, keep waiting
+        expected_cmd= rs.shift == cmd.class::CMD
+        #raise UnexpectedResponse, "Received #{response} response for cmd #{cmd.class::CMD}" unless expected_cmd
         rs
-      rescue Timeout::Error
       end
 
     end

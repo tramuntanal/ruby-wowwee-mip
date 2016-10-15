@@ -117,7 +117,7 @@ module Wowwee
         class DistanceDrive < Base
           CMD= 0x70
           def initialize(data)
-            super(CMD, *data)
+            super(CMD, data)
           end
         end
       end

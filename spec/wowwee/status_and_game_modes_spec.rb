@@ -19,14 +19,20 @@ describe Wowwee::Mip do
       expect(mode).to be :app
     end
     it "should be able to change Mip game modes" do
-      should_change_to_mode(:app)
-      should_change_to_mode(:cage)
-      should_change_to_mode(:tracking)
-      should_change_to_mode(:dance)
-      should_change_to_mode(:default)
-      should_change_to_mode(:stack)
-      should_change_to_mode(:trick)
-      should_change_to_mode(:roam)
+      status= MIP.status
+      if status.on_back?
+        should_change_to_mode(:cage)
+        should_change_to_mode(:tracking)
+        should_change_to_mode(:dance)
+        should_change_to_mode(:default)
+        should_change_to_mode(:stack)
+        should_change_to_mode(:trick)
+        should_change_to_mode(:roam)
+        should_change_to_mode(:app)
+      else
+        MIP.set_game_mode(:app)
+        puts "Only testing one mode change. Put the robot on back to check game mode changing."
+      end
     end
     def should_change_to_mode(new_mode)
       MIP.set_game_mode new_mode
