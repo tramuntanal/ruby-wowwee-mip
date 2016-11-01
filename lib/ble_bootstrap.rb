@@ -1,10 +1,15 @@
 module BLE
   # A service for bootstraping connection to BLE devices.
   class Bootstrap
-    def initialize
-      puts ">>>#{BLE::Adapter.list}"
-      # Selecter adapter
-      @a = BLE::Adapter.new('hci0')
+
+    def self.list_adapters
+      puts BLE::Adapter.list
+    end
+    def initialize(adapter='hci0')
+      @a = BLE::Adapter.new(adapter)
+    end
+
+    def show_adapter_info
       puts "Info: #{@a.iface}"
       puts "Info: #{@a.name}"
       puts "Info: #{@a.address}"
@@ -64,26 +69,37 @@ module BLE
       }
     end
 
-    def start_session(device_address)
-      #mgr.run_discovery
-      # Get device and connect to it
+    # Get device and connect to it
+    def start_session(device_address, async_ops: true)
       dev= find_device_by_address(device_address)
       puts "Device<address:#{dev.address}, Name:#{dev.name}>"
-      #dev.pair
+      #      dev.pair unless dev.is_paired?
       if dev.is_connected?
         puts "Device already connected!"
       else
         begin
           puts 'connecting...'
           dev.connect
-          puts "After connecting is_connected??#{dev.is_connected?}"
+          raise BLE::Device::NotConnected unless dev.is_connected?
         rescue Exception => e
           puts "Connection failed due to:#{e.class} #{e.message}"
           puts e.backtrace
         end
       end
+
+      #      if async_ops
+      #        run_events_thread
+      #      end
       dev
     end
+    #    # Required for receiveing notifications
+    #    def run_events_thread
+    #      Thread.new {
+    #        main= DBus::Main.new
+    #        main << BLE::DBUS
+    #        main.run
+    #      }
+    #    end
 
   end
 end

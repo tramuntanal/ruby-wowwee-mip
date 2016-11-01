@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'on_robot_spec_helper'
 
 describe Wowwee::Mip do
 

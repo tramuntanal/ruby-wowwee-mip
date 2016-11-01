@@ -16,13 +16,13 @@ module Wowwee
           BLE::Characteristic.add WRITE,
             name: 'write',
             type: 'wowwee.mip.protocol.characteristic.write',
-            out: ->(cmd) { cmd.to_s }
+            out: ->(rq) { rq.to_s }
         end
         def initialize(dev)
           @device= dev
         end
-        def send(cmd)
-          @device.[]=(UUID, Characteristics::WRITE, cmd)
+        def send(rq)
+          @device.[]=(UUID, Characteristics::WRITE, rq)
         end
         def write(data)
           @device.[]=(UUID, Characteristics::WRITE, data, {raw: true})
