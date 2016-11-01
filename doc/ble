@@ -1,0 +1,19 @@
+to check Bluez version: bluetoothd -v
+
+# Getting Started with Bluetooth Low Energy:
+https://www.safaribooksonline.com/library/view/getting-started-with/9781491900550/ch04.html
+
+# MONITORING: sudo dbus-monitor --system
+
+# If WIFI blocks:
+# sudo service network-manager restart
+# or, without sudo,
+# nmcli networking off
+# nmcli networking on
+
+#
+# gatttool -b <address> --interactive
+# connect
+# char-read-uuid 2902
+#
+# ~/prog/tmp/bluez-5.41$ less doc/gatt-api.txt
