@@ -96,9 +96,6 @@ module Wowwee
       cmd 0x86, :reset_odometer
       cmd 0x85,  :read_odometer,
         postprocessor: ->(bytes) { Protocol::OdoCalc.bendian_to_cm(bytes) }
-      #      cmd :mip_status, 0x79,
-      #        preprocessor: ->(data) { nil},
-      #        postprocessor: ->(bytes) { bytes }
     end
   end
 end
