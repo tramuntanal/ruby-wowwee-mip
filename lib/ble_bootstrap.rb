@@ -87,19 +87,19 @@ module BLE
         end
       end
 
-      #      if async_ops
-      #        run_events_thread
+      #            if async_ops
+      #              run_events_thread(dev)
       #      end
       dev
     end
-    #    # Required for receiveing notifications
-    #    def run_events_thread
-    #      Thread.new {
-    #        main= DBus::Main.new
-    #        main << BLE::DBUS
-    #        main.run
-    #      }
-    #    end
+    # Required for receiveing notifications
+    def run_events_thread(device)
+      Thread.new {
+        main= DBus::Main.new
+        main << BLE::DBUS
+        main.run
+      }
+    end
 
   end
 end

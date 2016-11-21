@@ -7,6 +7,8 @@ require_relative 'request'
 module Wowwee
   module Mip
     module Protocol
+      attr_reader :code
+      attr_reader :name
 
       # A Cmd encapsulates the code of the Mip command (defining
       # the context in which information is exchanged) and

@@ -1,8 +1,15 @@
 require_relative 'protocol/cmd'
+require_relative 'protocol/robot_state'
+require_relative 'protocol/cmd_value'
 module Wowwee
   module Mip
     #
+    # The Mip phisical robot has Bluetooth Low Energy (BLE).
+    # So the protocol is a GATT protocol.
     # Good explanation of ATT and GATT concepts: https://epxx.co/artigos/bluetooth_gatt.html
+    #
+    # Each Attribute corresponds to a service and CMDs are values of the service,
+    # then commands are Attribute values.
     #
     module Protocol
 
@@ -21,6 +28,22 @@ module Wowwee
       end
       def self.find_cmd_by_code(code)
         CMDS_BY_CODE[code]
+      end
+
+      class Ble
+        def initialize(ble_device)
+          @device= ble_device
+          @state= RobotState.new
+          @transfer= Protocol::Transfer.new(@device, @state)
+        end
+
+        def send(cmd_name, data=nil)
+          @transfer.send(cmd_name, data)
+        end
+        def read(cmd_name)
+          cmd_value= @transfer.read_new(cmd_name)
+          cmd_value.value
+        end
       end
 
     end
