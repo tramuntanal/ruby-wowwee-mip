@@ -61,16 +61,17 @@ device_address_to_connect= '1C:05:B3:7D:95:74'
 
 #->>>>>>>>>>>>> Using remedy gem
 #require 'remedy'
-#def control_robot_by_kbd
+#def control_robot_by_kbd(mip)
 #  puts "inn"
 #  include Remedy
 #  user_input = Interaction.new
 #
 #  user_input.loop do |key|
 #    puts key
-##    case key
-##    when :right
-##    end
+#    #    case key
+#    #    when 's'
+#    puts "software version: #{mip.software_version}"
+#      #    end
 #  end
 #end
 
@@ -78,11 +79,11 @@ device_address_to_connect= '1C:05:B3:7D:95:74'
 
 begin
 
-  #  control_robot_by_kbd()
-  #  exit
   puts "========================"
   require_relative 'wowwee/mip'
   mip= Wowwee::mip(device_address_to_connect)
+  control_robot_by_kbd(mip)
+  exit
 
   #  puts "Software version: #{mip.software_version}"
   loop {
