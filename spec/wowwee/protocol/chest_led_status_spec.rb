@@ -16,11 +16,14 @@ describe Wowwee::Mip::Protocol::ChestLedStatus do
     end
   end
   context "When decrementing a color" do
-    it "Should have 0 as bottom limit for each color" do
+    it "Should have 0 as bottom limit when decrementing from a positive value" do
+      @status.increment(:blue, 1)
+      @status.decrement(:blue, 2)
+      expect(@status.color).to eq [255, 0, 0]
+    end
+    it "Should have 0 as bottom limit when decrementing from zero" do
       @status.decrement(:red)
       @status.decrement(:green)
-      # test also when starting point is not 0
-      @status.increment(:blue, 1)
       @status.decrement(:blue, 2)
       expect(@status.color).to eq [245, 0, 0]
     end
