@@ -7,7 +7,6 @@ class RobotController
     @mip= Wowwee::mip(address)
     @interpreter= HumanInputInterpreter.new
     print_menu
-    nil
   end
 
   # print the menu
@@ -19,7 +18,8 @@ class RobotController
     puts "Move the robot with arrow keys"
     do_key_loop {|k|
       code= @interpreter.drive_key_to_code(k)
-      @mip.play_sound(code)
+      # TODO
+      #      @mip.xxx(code)
     }
     print_menu
   end
@@ -83,6 +83,10 @@ EOCHEST
       @mip.volume= volume
     }
     print_menu
+  end
+
+  def inspect
+    self.class.name
   end
   #-----------------------------------
   private

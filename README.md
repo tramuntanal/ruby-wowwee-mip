@@ -49,6 +49,15 @@ mip.stop
 ## Examples
 For usage examples and implemented features see the specs.
 
+## Robot Controller
+There's an incipient 'interactive' shell to control the robot.
+```ruby
+bin/console
+irb(main):001:0> require 'robot_controller'
+irb(main):001:0> c= RobotController.new
+irb(main):001:0> c.chest_led
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
