@@ -68,7 +68,11 @@ module Wowwee
       cmd 0x8A, :set_head_led,
         preprocessor: ->(symbols) { SetHeadLedMapper.sym_to_ary(*symbols)}
       cmd 0x06, :play_sound
-      cmd 0x15, :volume
+      cmd 0x15, :set_volume
+      cmd 0x16, :get_volume,
+        postprocessor: ->(bytes) {
+        bytes.first.to_i
+      }
       cmd 0x0D, :radar_mode,
         postprocessor: ->(bytes) {
         case bytes.first.to_i

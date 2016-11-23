@@ -97,13 +97,17 @@ module Wowwee
       end
       # Plays one of the sounds of the robot for 1 second
       def play_sound(sequence=[1, 30])
+        sequence= [sequence] unless sequence.kind_of?(Array)
         @protocol.send(:play_sound, sequence)
       end
       def silence!
         @protocol.send(:play_sound, [105])
       end
-      def volume(vol)
-        @protocol.send(:play_sound, [vol])
+      def volume=(vol)
+        @protocol.send(:set_volume, [vol])
+      end
+      def volume
+        @protocol.read(:get_volume)
       end
       # @returns current radar mode.
       def radar_mode
